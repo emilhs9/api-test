@@ -6,6 +6,7 @@ let baxis = document.getElementById("baxis");
 let tarix = document.getElementById("tarix");
 
 const API_URL = 'https://6ad0ef8caddc5b5cb1428a39.mockapi.io/product/news';
+let cariMehsullar = [];
 
 function gonder() {
   if (!ad || !ad.value.trim()) {
@@ -111,10 +112,11 @@ function melumatlariGetir() {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
+      cariMehsullar = Array.isArray(data) ? data : [];
       if (!cedvelBedeni) return;
       cedvelBedeni.innerHTML = "";
 
-      if (!Array.isArray(data) || data.length === 0) {
+      if (cariMehsullar.length === 0) {
         cedvelBedeni.innerHTML = `
           <tr>
             <td colspan="5" style="text-align: center; padding: 25px; color: #888;">
@@ -125,8 +127,13 @@ function melumatlariGetir() {
         return;
       }
 
-      data.forEach(item => {
+      cariMehsullar.forEach(item => {
         const tr = document.createElement("tr");
+        tr.setAttribute("data-id", item.id);
+
+        if (id && id.value.trim() === String(item.id)) {
+          tr.classList.add("secilmis-setir");
+        }
 
         tr.innerHTML = `
           <td class="sutun-id">[ #${item.id} ]</td>
@@ -163,6 +170,28 @@ function melumatlariGetir() {
     });
 }
 
+function idIleSecim(axtarilanId) {
+  const setirler = document.querySelectorAll("#cedvel-bedeni tr");
+  setirler.forEach(s => s.classList.remove("secilmis-setir"));
+
+  if (!axtarilanId) return;
+
+  const tapilanSetir = document.querySelector(`#cedvel-bedeni tr[data-id="${axtarilanId}"]`);
+  if (tapilanSetir) {
+    tapilanSetir.classList.add("secilmis-setir");
+    tapilanSetir.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    const mehsul = cariMehsullar.find(m => String(m.id) === String(axtarilanId));
+    if (mehsul) {
+      if (silid) silid.value = mehsul.id;
+      if (ad) ad.value = mehsul.title || "";
+      if (kateqoriya) kateqoriya.value = mehsul.category || "";
+      if (baxis) baxis.value = mehsul.view || 0;
+      if (tarix) tarix.value = mehsul.date || "";
+    }
+  }
+}
+
 function redakteEt(setirId, setirAd, setirKat, setirBaxis, setirTarix) {
   if (id) id.value = setirId;
   if (silid) silid.value = setirId;
@@ -171,6 +200,7 @@ function redakteEt(setirId, setirAd, setirKat, setirBaxis, setirTarix) {
   if (baxis) baxis.value = setirBaxis;
   if (tarix) tarix.value = setirTarix;
 
+  idIleSecim(setirId);
   if (ad) ad.focus();
 }
 
@@ -183,6 +213,9 @@ function formuTemizle() {
   if (tarix) {
     tarix.value = new Date().toISOString().split('T')[0];
   }
+
+  const setirler = document.querySelectorAll("#cedvel-bedeni tr");
+  setirler.forEach(s => s.classList.remove("secilmis-setir"));
 }
 
 function metniQoru(metn) {
@@ -203,6 +236,12 @@ function atributuQoru(metn) {
 document.addEventListener("DOMContentLoaded", () => {
   if (tarix && !tarix.value) {
     tarix.value = new Date().toISOString().split('T')[0];
+  }
+
+  if (id) {
+    id.addEventListener("input", () => {
+      idIleSecim(id.value.trim());
+    });
   }
 
   const duymeElaveEt = document.getElementById("duyme-elave-et");
