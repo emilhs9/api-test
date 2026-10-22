@@ -388,31 +388,28 @@ html, body {
 .sutun-ad { min-width: 170px; font-weight: 600; }
 .sutun-tarix { width: 125px; text-align: center; font-size: 12px; white-space: nowrap; }
 .sutun-qelem { width: 85px; min-width: 85px; text-align: center; white-space: nowrap; }
-.sutun-qab { width: 85px; min-width: 85px; text-align: center; white-space: nowrap; }
+.sutun-qab { width: 95px; min-width: 95px; text-align: center; white-space: nowrap; }
 
 .emeliyyat-duymesi {
   background: transparent;
   border: 1.5px solid #ffffff;
   color: #ffffff;
-  width: 32px;
-  height: 32px;
-  padding: 0;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
   transition: all 0.15s ease;
 }
 
 .emeliyyat-duymesi:hover {
   background-color: #ffffff;
   color: #000000;
-}
-
-.vektor-ikon {
-  display: block;
-  stroke: currentColor;
-  flex-shrink: 0;
 }
 
 .cedvel-alti {
