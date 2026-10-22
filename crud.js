@@ -221,16 +221,13 @@ function terminalaYaz(metod, unvan, status, mesaj) {
   const terminalYazilari = document.getElementById("terminal-yazilari");
   if (!terminalYazilari) return;
 
-  const setir = document.createElement("div");
-  setir.className = "jurnal-setri";
-  setir.innerHTML = `
+  terminalYazilari.innerHTML = `
     <span class="jurnal-metodu">[${metod}]</span>
     <span>${unvan}</span>
     <span>STATUS: ${status}</span>
     <span>>> ${mesaj}</span>
-    <span style="margin-left:auto; color:#666;">${new Date().toLocaleTimeString()}</span>
+    <span style="margin-left:auto; color:#666; padding-left:15px;">${new Date().toLocaleTimeString()}</span>
   `;
-  terminalYazilari.prepend(setir);
 }
 
 function metniQoru(metn) {

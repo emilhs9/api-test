@@ -434,11 +434,13 @@ html, body {
   background-color: #050505;
   font-size: 11px;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .terminal-on-soz {
   font-weight: 700;
   color: #888888;
+  white-space: nowrap;
 }
 
 .terminal-axini {
@@ -447,6 +449,9 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .jurnal-setri {
