@@ -28,14 +28,12 @@ function gonder() {
   })
   .then(response => response.json())
   .then(json => {
-    alert("News added: ID #" + json.id);
-    terminalaYaz('POST', API_URL, 201, "New item created: ID #" + json.id);
+    alert("Item added: ID #" + json.id);
     formuTemizle();
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Error occurred: " + err);
-    terminalaYaz('POST', API_URL, 500, "Error: " + err);
+    alert("Error: " + err);
   });
 }
 
@@ -60,14 +58,12 @@ function deyis() {
   })
   .then(response => response.json())
   .then(data => {
-    alert("News updated: ID #" + data.id);
-    terminalaYaz('PUT', API_URL + '/' + data.id, 200, "Item updated: ID #" + data.id);
+    alert("Item updated: ID #" + data.id);
     formuTemizle();
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Error occurred: " + err);
-    terminalaYaz('PUT', API_URL + '/' + id.value, 500, "Error: " + err);
+    alert("Error: " + err);
   });
 }
 
@@ -88,29 +84,25 @@ function sil(silinecekId) {
   })
   .then(response => response.json())
   .then(data => {
-    alert("News deleted: ID #" + hedefId);
-    terminalaYaz('DELETE', API_URL + '/' + hedefId, 200, "Item deleted: ID #" + hedefId);
+    alert("Item deleted: ID #" + hedefId);
     if (id && id.value.trim() === String(hedefId)) {
       formuTemizle();
     }
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Deletion error: " + err);
-    terminalaYaz('DELETE', API_URL + '/' + hedefId, 500, "Error: " + err);
+    alert("Error: " + err);
   });
 }
 
 function melumatlariGetir() {
   const cedvelBedeni = document.getElementById("cedvel-bedeni");
-  const umumiSay = document.getElementById("umumi-say");
-  const saygac = document.getElementById("saygac");
 
   if (cedvelBedeni) {
     cedvelBedeni.innerHTML = `
       <tr>
         <td colspan="5" style="text-align: center; padding: 25px; color: #888;">
-          [ LOADING DATA FROM API... ]
+          [ LOADING DATA... ]
         </td>
       </tr>
     `;
@@ -119,11 +111,6 @@ function melumatlariGetir() {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      terminalaYaz('GET', API_URL, 200, data.length + " items loaded");
-
-      if (umumiSay) umumiSay.innerText = data.length;
-      if (saygac) saygac.innerText = data.length;
-
       if (!cedvelBedeni) return;
       cedvelBedeni.innerHTML = "";
 
@@ -145,16 +132,16 @@ function melumatlariGetir() {
           <td class="sutun-id">[ #${item.id} ]</td>
           <td class="sutun-ad">
             <div style="font-weight: 700;">${metniQoru(item.title || "No Title")}</div>
-            <small style="color: #888; font-size: 11px;">Cat: ${metniQoru(item.category || "General")} | Views: ${item.view || 0}</small>
+            <small style="color: #888; font-size: 11px;">${metniQoru(item.category || "General")} ${item.view ? `• Views: ${item.view}` : ""}</small>
           </td>
           <td class="sutun-tarix">${item.date || "N/A"}</td>
           <td class="sutun-qelem">
-            <button type="button" class="emeliyyat-duymesi" title="Edit row" onclick="redakteEt('${item.id}', '${atributuQoru(item.title)}', '${atributuQoru(item.category)}', '${item.view || 0}', '${item.date || ""}')">
+            <button type="button" class="emeliyyat-duymesi" onclick="redakteEt('${item.id}', '${atributuQoru(item.title)}', '${atributuQoru(item.category)}', '${item.view || 0}', '${item.date || ""}')">
               EDIT
             </button>
           </td>
           <td class="sutun-qab">
-            <button type="button" class="emeliyyat-duymesi" title="Delete row" onclick="sil('${item.id}')">
+            <button type="button" class="emeliyyat-duymesi" onclick="sil('${item.id}')">
               DELETE
             </button>
           </td>
@@ -168,12 +155,11 @@ function melumatlariGetir() {
         cedvelBedeni.innerHTML = `
           <tr>
             <td colspan="5" style="text-align: center; padding: 25px; color: #ff5555;">
-              [ API ERROR: ${err.message} ]
+              [ ERROR: ${err.message} ]
             </td>
           </tr>
         `;
       }
-      terminalaYaz('GET', API_URL, 500, "Error: " + err);
     });
 }
 
@@ -185,7 +171,6 @@ function redakteEt(setirId, setirAd, setirKat, setirBaxis, setirTarix) {
   if (baxis) baxis.value = setirBaxis;
   if (tarix) tarix.value = setirTarix;
 
-  canliPayloadGoster();
   if (ad) ad.focus();
 }
 
@@ -198,36 +183,6 @@ function formuTemizle() {
   if (tarix) {
     tarix.value = new Date().toISOString().split('T')[0];
   }
-
-  canliPayloadGoster();
-}
-
-function canliPayloadGoster() {
-  const jsonOnbaxis = document.getElementById("json-onbaxis");
-  if (!jsonOnbaxis) return;
-
-  const melumat = {
-    id: id ? id.value : "",
-    title: ad ? ad.value : "",
-    category: kateqoriya ? kateqoriya.value : "",
-    view: baxis ? baxis.value : "",
-    date: tarix ? tarix.value : "",
-  };
-
-  jsonOnbaxis.textContent = JSON.stringify(melumat, null, 2);
-}
-
-function terminalaYaz(metod, unvan, status, mesaj) {
-  const terminalYazilari = document.getElementById("terminal-yazilari");
-  if (!terminalYazilari) return;
-
-  terminalYazilari.innerHTML = `
-    <span class="jurnal-metodu">[${metod}]</span>
-    <span>${unvan}</span>
-    <span>STATUS: ${status}</span>
-    <span>>> ${mesaj}</span>
-    <span style="margin-left:auto; color:#666; padding-left:15px;">${new Date().toLocaleTimeString()}</span>
-  `;
 }
 
 function metniQoru(metn) {
@@ -250,31 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
     tarix.value = new Date().toISOString().split('T')[0];
   }
 
-  [id, ad, kateqoriya, baxis, tarix].forEach(element => {
-    if (element) {
-      element.addEventListener("input", () => {
-        if (element === id && silid) silid.value = id.value;
-        canliPayloadGoster();
-      });
-      element.addEventListener("change", () => {
-        if (element === id && silid) silid.value = id.value;
-        canliPayloadGoster();
-      });
-    }
-  });
-
-  const axtarisXanasi = document.getElementById("axtaris-xanasi");
-  if (axtarisXanasi) {
-    axtarisXanasi.addEventListener("input", (e) => {
-      const sorgu = e.target.value.toLowerCase().trim();
-      const setirler = document.querySelectorAll("#cedvel-bedeni tr");
-      setirler.forEach(s => {
-        const mezmun = s.textContent.toLowerCase();
-        s.style.display = mezmun.includes(sorgu) ? "" : "none";
-      });
-    });
-  }
-
   const duymeElaveEt = document.getElementById("duyme-elave-et");
   if (duymeElaveEt) {
     duymeElaveEt.addEventListener("click", () => {
@@ -283,6 +213,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  canliPayloadGoster();
   melumatlariGetir();
 });

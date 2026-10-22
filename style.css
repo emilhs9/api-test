@@ -12,7 +12,7 @@ html, body {
   color: #ffffff;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 13px;
-  line-height: 1.4;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -39,8 +39,9 @@ html, body {
   padding: 24px 20px;
   border-bottom: 2px solid #ffffff;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .panel-qeydi {
@@ -50,25 +51,11 @@ html, body {
   line-height: 1.6;
 }
 
-.status-gostericisi {
-  margin-top: 20px;
-  font-size: 11px;
-  color: #aaaaaa;
-}
-
-.yanib-sonen {
-  animation: yanibSonenAnim 1s infinite;
-}
-
-@keyframes yanibSonenAnim {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
 .panel-alt-hisse {
-  padding: 28px 20px;
+  padding: 30px 20px;
   cursor: pointer;
   user-select: none;
+  text-align: center;
   transition: all 0.2s ease;
 }
 
@@ -83,12 +70,6 @@ html, body {
   letter-spacing: 2px;
 }
 
-.mehsul-sayisi {
-  font-size: 11px;
-  margin-top: 4px;
-  opacity: 0.8;
-}
-
 .esas-hisse {
   flex: 1;
   height: 100%;
@@ -98,19 +79,13 @@ html, body {
 }
 
 .esas-basliq {
-  height: 50px;
+  height: 54px;
   border-bottom: 2px solid #ffffff;
   padding: 0 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-shrink: 0;
-}
-
-.basliq-sol-metn {
-  font-size: 12px;
-  color: #888888;
-  font-weight: 600;
 }
 
 .istifadeci-sahesi {
@@ -120,14 +95,14 @@ html, body {
 }
 
 .istifadeci-adi {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 2px;
 }
 
 .istifadeci-dairesi {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 2px solid #ffffff;
   background-color: #000000;
@@ -150,55 +125,43 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 16px 20px;
+  padding: 20px 24px;
   overflow: hidden;
 }
 
 .birinci-sehife {
-  flex: 0.44;
+  flex: 0.42;
   border-right: 2px solid #ffffff;
 }
 
 .ikinci-sehife {
-  flex: 0.56;
+  flex: 0.58;
 }
 
 .sutun-basligi {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   flex-shrink: 0;
 }
 
-.sutun-adi {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
 .sehife-kodu {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  border: 1px solid #ffffff;
-  padding: 2px 8px;
-}
-
-.sutun-sag-hisse {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  border: 1.5px solid #ffffff;
+  padding: 3px 10px;
 }
 
 .elave-et-duymesi {
   background-color: #000000;
   color: #ffffff;
   border: 2px solid #ffffff;
-  padding: 8px 20px;
-  font-size: 15px;
+  padding: 8px 24px;
+  font-size: 16px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.2s ease;
@@ -217,36 +180,35 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  padding-right: 4px;
+  justify-content: center;
+  padding: 0 10px;
 }
 
 .forma-setri {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .forma-setri label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #cccccc;
 }
 
-.forma-setri input,
-.forma-setri select {
+.forma-setri input {
   background-color: #000000;
   border: 1.5px solid #ffffff;
   color: #ffffff;
-  padding: 8px 12px;
+  padding: 9px 12px;
   font-family: inherit;
   font-size: 13px;
   outline: none;
   transition: all 0.2s;
 }
 
-.forma-setri input:focus,
-.forma-setri select:focus {
+.forma-setri input:focus {
   background-color: #111111;
   border-color: #ffffff;
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
@@ -254,24 +216,22 @@ html, body {
 
 .forma-emeliyyatlar {
   display: flex;
-  gap: 8px;
-  margin-top: 14px;
+  gap: 10px;
+  margin-top: 18px;
   flex-shrink: 0;
-  flex-wrap: wrap;
 }
 
 .standart-duyme {
   flex: 1;
-  min-width: 100px;
   background-color: #000000;
   color: #ffffff;
   border: 1.5px solid #ffffff;
-  padding: 9px 8px;
+  padding: 10px;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   text-align: center;
   transition: all 0.2s ease;
 }
@@ -283,75 +243,6 @@ html, body {
 
 .ikinci-dereceli-duyme {
   border-style: dashed;
-}
-
-.json-qutusu {
-  margin-top: 14px;
-  border-top: 1px dashed #444444;
-  padding-top: 8px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 90px;
-}
-
-.json-basligi {
-  font-size: 10px;
-  color: #888888;
-  margin-bottom: 4px;
-}
-
-#json-onbaxis {
-  flex: 1;
-  background-color: #050505;
-  border: 1px solid #333333;
-  color: #aaaaaa;
-  padding: 8px 10px;
-  font-size: 11px;
-  overflow-y: auto;
-}
-
-.axtaris-zolaqi {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #050505;
-  border: 1.5px solid #ffffff;
-  padding: 6px 12px;
-  margin-bottom: 12px;
-  flex-shrink: 0;
-}
-
-.komanda-isaresi {
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 11px;
-}
-
-.axtaris-zolaqi input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 12px;
-  outline: none;
-}
-
-.kicik-duyme {
-  background: transparent;
-  border: 1px solid #888888;
-  color: #cccccc;
-  padding: 3px 8px;
-  font-size: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.kicik-duyme:hover {
-  background-color: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
 }
 
 .cedvel-sahesi {
@@ -369,8 +260,8 @@ html, body {
 
 .esas-cedvel th,
 .esas-cedvel td {
-  border: 1px solid #ffffff;
-  padding: 10px 14px;
+  border: 1.5px solid #ffffff;
+  padding: 12px 14px;
   font-size: 13px;
 }
 
@@ -381,12 +272,12 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 2;
-  box-shadow: inset 0 -1px 0 #ffffff;
+  box-shadow: inset 0 -1.5px 0 #ffffff;
 }
 
-.sutun-id { width: 75px; text-align: center; white-space: nowrap; }
-.sutun-ad { min-width: 170px; font-weight: 600; }
-.sutun-tarix { width: 125px; text-align: center; font-size: 12px; white-space: nowrap; }
+.sutun-id { width: 70px; text-align: center; white-space: nowrap; }
+.sutun-ad { min-width: 150px; font-weight: 600; }
+.sutun-tarix { width: 120px; text-align: center; font-size: 12px; white-space: nowrap; }
 .sutun-qelem { width: 85px; min-width: 85px; text-align: center; white-space: nowrap; }
 .sutun-qab { width: 95px; min-width: 95px; text-align: center; white-space: nowrap; }
 
@@ -394,7 +285,7 @@ html, body {
   background: transparent;
   border: 1.5px solid #ffffff;
   color: #ffffff;
-  padding: 5px 10px;
+  padding: 5px 12px;
   font-family: inherit;
   font-size: 11px;
   font-weight: 800;
@@ -410,52 +301,4 @@ html, body {
 .emeliyyat-duymesi:hover {
   background-color: #ffffff;
   color: #000000;
-}
-
-.cedvel-alti {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: #888888;
-  margin-top: 8px;
-  flex-shrink: 0;
-}
-
-.terminal-sahesi {
-  height: 34px;
-  border-top: 2px solid #ffffff;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: #050505;
-  font-size: 11px;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-.terminal-on-soz {
-  font-weight: 700;
-  color: #888888;
-  white-space: nowrap;
-}
-
-.terminal-axini {
-  flex: 1;
-  color: #00ff66;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.jurnal-setri {
-  display: flex;
-  gap: 10px;
-}
-
-.jurnal-metodu {
-  font-weight: 700;
 }

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[ API SYSTEM ] - PRODUCT MANAGEMENT</title>
+  <title>API - Product Management</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,23 +15,20 @@
 
     <aside class="yan-panel">
       <div class="panel-ust-hisse">
-        <p class="panel-qeydi">link where all product operations are executed</p>
-        <div class="status-gostericisi">[API: ONLINE] <span class="yanib-sonen">_</span></div>
+        <p class="panel-qeydi">mehsulun butun emeliyyatlarinin icra olunacagi link</p>
       </div>
 
       <div class="panel-alt-hisse" id="mehsul-kecid">
         <div class="mehsul-basligi">PRODUCT</div>
-        <div class="mehsul-sayisi">TOTAL: <span id="saygac">0</span></div>
       </div>
     </aside>
 
     <main class="esas-hisse">
 
       <header class="esas-basliq">
-        <div class="basliq-sol-metn">> PRODUCTS & NEWS DASHBOARD // MOCKAPI</div>
         <div class="istifadeci-sahesi">
           <span class="istifadeci-adi">EMIL</span>
-          <div class="istifadeci-dairesi" title="User: EMIL"></div>
+          <div class="istifadeci-dairesi"></div>
         </div>
       </header>
 
@@ -39,97 +36,58 @@
 
         <section class="sutun-blok birinci-sehife">
           <div class="sutun-basligi">
-            <span class="sutun-adi">> FORM // ADD_PRODUCT_AND_NEWS</span>
             <span class="sehife-kodu">PAGE 1</span>
           </div>
 
           <div class="forma-sahesi">
             <form id="mehsul-formu" onsubmit="event.preventDefault();" autocomplete="off">
               <div class="forma-setri">
-                <label for="id">> ID (PRODUCT ID) :</label>
-                <input 
-                  type="text" 
-                  id="id" 
-                  placeholder="e.g. 2 (enter ID or select from table...)"
-                >
+                <label for="id">ID :</label>
+                <input type="text" id="id" placeholder="ID (auto or type)">
                 <input type="hidden" id="sil-id">
               </div>
 
               <div class="forma-setri">
-                <label for="ad">> TITLE (NAME) :</label>
-                <input 
-                  type="text" 
-                  id="ad" 
-                  placeholder="Enter product or news title..." 
-                  required
-                >
+                <label for="ad">TITLE :</label>
+                <input type="text" id="ad" placeholder="Product title" required>
               </div>
 
               <div class="forma-setri">
-                <label for="kateqoriya">> CATEGORY :</label>
-                <input 
-                  type="text" 
-                  id="kateqoriya" 
-                  placeholder="e.g. Technology, Electronics..."
-                >
+                <label for="kateqoriya">CATEGORY :</label>
+                <input type="text" id="kateqoriya" placeholder="Category">
               </div>
 
               <div class="forma-setri">
-                <label for="baxis">> VIEW COUNT :</label>
-                <input 
-                  type="number" 
-                  id="baxis" 
-                  placeholder="0"
-                >
+                <label for="baxis">VIEW :</label>
+                <input type="number" id="baxis" placeholder="0">
               </div>
 
               <div class="forma-setri">
-                <label for="tarix">> DATE :</label>
-                <input 
-                  type="date" 
-                  id="tarix" 
-                  required
-                >
+                <label for="tarix">DATE :</label>
+                <input type="date" id="tarix" required>
               </div>
 
               <div class="forma-emeliyyatlar">
                 <button type="button" class="standart-duyme" id="duyme-gonder" onclick="gonder()">
-                  [ SUBMIT (POST) ]
+                  [ SEND ]
                 </button>
                 <button type="button" class="standart-duyme" id="duyme-deyis" onclick="deyis()">
-                  [ UPDATE (PUT) ]
-                </button>
-                <button type="button" class="standart-duyme" id="duyme-sil" onclick="sil()">
-                  [ DELETE ]
+                  [ UPDATE ]
                 </button>
                 <button type="button" class="standart-duyme ikinci-dereceli-duyme" id="duyme-temizle" onclick="formuTemizle()">
                   [ CLEAR ]
                 </button>
               </div>
             </form>
-
-            <div class="json-qutusu">
-              <div class="json-basligi">> LIVE JSON PAYLOAD:</div>
-              <pre id="json-onbaxis">{}</pre>
-            </div>
           </div>
         </section>
 
         <section class="sutun-blok ikinci-sehife">
           <div class="sutun-basligi">
-            <span class="sutun-adi">> DATABASE // PRODUCTS_TABLE</span>
-            <div class="sutun-sag-hisse">
-              <button class="elave-et-duymesi" id="duyme-elave-et">
-                ADD NEW
-              </button>
-              <span class="sehife-kodu">PAGE 2</span>
-            </div>
-          </div>
-
-          <div class="axtaris-zolaqi">
-            <span class="komanda-isaresi">SEARCH ></span>
-            <input type="text" id="axtaris-xanasi" placeholder="Search by title or ID..." autocomplete="off">
-            <button class="kicik-duyme" onclick="melumatlariGetir()">[ REFRESH ]</button>
+            <button class="elave-et-duymesi" id="duyme-elave-et">
+              ADD NEW
+            </button>
+            <span class="sehife-kodu">PAGE 2</span>
           </div>
 
           <div class="cedvel-sahesi">
@@ -147,21 +105,9 @@
               </tbody>
             </table>
           </div>
-
-          <div class="cedvel-alti">
-            <span>TOTAL: <strong id="umumi-say">0</strong> ITEMS</span>
-            <span>SOURCE: mockapi.io/product/news</span>
-          </div>
         </section>
 
       </div>
-
-      <footer class="terminal-sahesi">
-        <span class="terminal-on-soz">> API_LOGS:</span>
-        <div class="terminal-axini" id="terminal-yazilari">
-          <div class="terminal-metni">[READY] Connected: https://6ad0ef8caddc5b5cb1428a39.mockapi.io/product/news</div>
-        </div>
-      </footer>
 
     </main>
 
