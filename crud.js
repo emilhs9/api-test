@@ -9,7 +9,7 @@ const API_URL = 'https://6ad0ef8caddc5b5cb1428a39.mockapi.io/product/news';
 
 function gonder() {
   if (!ad || !ad.value.trim()) {
-    alert("Zəhmət olmasa başlığı daxil edin!");
+    alert("Please enter a title!");
     if (ad) ad.focus();
     return;
   }
@@ -28,20 +28,20 @@ function gonder() {
   })
   .then(response => response.json())
   .then(json => {
-    alert("Xeber elave olundu " + json.id);
-    terminalaYaz('POST', API_URL, 201, "Yeni xəbər əlavə olundu: ID #" + json.id);
+    alert("News added: ID #" + json.id);
+    terminalaYaz('POST', API_URL, 201, "New item created: ID #" + json.id);
     formuTemizle();
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Xəta baş verdi: " + err);
-    terminalaYaz('POST', API_URL, 500, "Xəta: " + err);
+    alert("Error occurred: " + err);
+    terminalaYaz('POST', API_URL, 500, "Error: " + err);
   });
 }
 
 function deyis() {
   if (!id || !id.value.trim()) {
-    alert("Dəyişmək üçün zəhmət olmasa ID daxil edin və ya cədvəldən seçin!");
+    alert("Please enter an ID or select a row using [EDIT]!");
     if (id) id.focus();
     return;
   }
@@ -60,26 +60,26 @@ function deyis() {
   })
   .then(response => response.json())
   .then(data => {
-    alert("Xeber deyishildi id:" + data.id);
-    terminalaYaz('PUT', API_URL + '/' + data.id, 200, "Xəbər yeniləndi: ID #" + data.id);
+    alert("News updated: ID #" + data.id);
+    terminalaYaz('PUT', API_URL + '/' + data.id, 200, "Item updated: ID #" + data.id);
     formuTemizle();
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Xəta baş verdi: " + err);
-    terminalaYaz('PUT', API_URL + '/' + id.value, 500, "Xəta: " + err);
+    alert("Error occurred: " + err);
+    terminalaYaz('PUT', API_URL + '/' + id.value, 500, "Error: " + err);
   });
 }
 
 function sil(silinecekId) {
   const hedefId = silinecekId || (id ? id.value.trim() : null) || (silid ? silid.value.trim() : null);
   if (!hedefId) {
-    alert("Silmək üçün zəhmət olmasa ID daxil edin və ya cədvəldən seçin!");
+    alert("Please enter an ID or select a row using [DELETE]!");
     if (id) id.focus();
     return;
   }
 
-  if (!confirm("ID #" + hedefId + " olan xəbəri silmək istədiyinizdən əminsiniz?")) {
+  if (!confirm("Are you sure you want to delete item with ID #" + hedefId + "?")) {
     return;
   }
 
@@ -88,16 +88,16 @@ function sil(silinecekId) {
   })
   .then(response => response.json())
   .then(data => {
-    alert("Xeber silindi id: " + hedefId);
-    terminalaYaz('DELETE', API_URL + '/' + hedefId, 200, "Xəbər silindi: ID #" + hedefId);
+    alert("News deleted: ID #" + hedefId);
+    terminalaYaz('DELETE', API_URL + '/' + hedefId, 200, "Item deleted: ID #" + hedefId);
     if (id && id.value.trim() === String(hedefId)) {
       formuTemizle();
     }
     melumatlariGetir();
   })
   .catch(err => {
-    alert("Silmə zamanı xəta: " + err);
-    terminalaYaz('DELETE', API_URL + '/' + hedefId, 500, "Xəta: " + err);
+    alert("Deletion error: " + err);
+    terminalaYaz('DELETE', API_URL + '/' + hedefId, 500, "Error: " + err);
   });
 }
 
@@ -110,7 +110,7 @@ function melumatlariGetir() {
     cedvelBedeni.innerHTML = `
       <tr>
         <td colspan="5" style="text-align: center; padding: 25px; color: #888;">
-          [ API-DƏN MƏLUMATLAR YÜKLƏNİR... ]
+          [ LOADING DATA FROM API... ]
         </td>
       </tr>
     `;
@@ -119,7 +119,7 @@ function melumatlariGetir() {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      terminalaYaz('GET', API_URL, 200, data.length + " məlumat gətirildi");
+      terminalaYaz('GET', API_URL, 200, data.length + " items loaded");
 
       if (umumiSay) umumiSay.innerText = data.length;
       if (saygac) saygac.innerText = data.length;
@@ -131,7 +131,7 @@ function melumatlariGetir() {
         cedvelBedeni.innerHTML = `
           <tr>
             <td colspan="5" style="text-align: center; padding: 25px; color: #888;">
-              [ HEÇ BİR MƏHSUL TAPILMADI ]
+              [ NO PRODUCTS FOUND ]
             </td>
           </tr>
         `;
@@ -144,17 +144,17 @@ function melumatlariGetir() {
         tr.innerHTML = `
           <td class="sutun-id">[ #${item.id} ]</td>
           <td class="sutun-ad">
-            <div style="font-weight: 700;">${metniQoru(item.title || "Ad yoxdur")}</div>
-            <small style="color: #888; font-size: 11px;">Kat: ${metniQoru(item.category || "Ümumi")} | Baxış: ${item.view || 0}</small>
+            <div style="font-weight: 700;">${metniQoru(item.title || "No Title")}</div>
+            <small style="color: #888; font-size: 11px;">Cat: ${metniQoru(item.category || "General")} | Views: ${item.view || 0}</small>
           </td>
-          <td class="sutun-tarix">${item.date || "Tarix yoxdur"}</td>
+          <td class="sutun-tarix">${item.date || "N/A"}</td>
           <td class="sutun-qelem">
-            <button type="button" class="emeliyyat-duymesi" title="Redaktə et (Edit)" onclick="redakteEt('${item.id}', '${atributuQoru(item.title)}', '${atributuQoru(item.category)}', '${item.view || 0}', '${item.date || ""}')">
+            <button type="button" class="emeliyyat-duymesi" title="Edit row" onclick="redakteEt('${item.id}', '${atributuQoru(item.title)}', '${atributuQoru(item.category)}', '${item.view || 0}', '${item.date || ""}')">
               EDIT
             </button>
           </td>
           <td class="sutun-qab">
-            <button type="button" class="emeliyyat-duymesi" title="Sil (Delete)" onclick="sil('${item.id}')">
+            <button type="button" class="emeliyyat-duymesi" title="Delete row" onclick="sil('${item.id}')">
               DELETE
             </button>
           </td>
@@ -168,12 +168,12 @@ function melumatlariGetir() {
         cedvelBedeni.innerHTML = `
           <tr>
             <td colspan="5" style="text-align: center; padding: 25px; color: #ff5555;">
-              [ API XƏTASI: ${err.message} ]
+              [ API ERROR: ${err.message} ]
             </td>
           </tr>
         `;
       }
-      terminalaYaz('GET', API_URL, 500, "Xəta: " + err);
+      terminalaYaz('GET', API_URL, 500, "Error: " + err);
     });
 }
 
