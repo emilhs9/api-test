@@ -80,18 +80,29 @@ function sil(silinecekId) {
     return;
   }
 
+  const tapilanSetir = document.querySelector(`#cedvel-bedeni tr[data-id="${hedefId}"]`);
+  if (tapilanSetir) {
+    tapilanSetir.classList.remove("secilmis-setir");
+    tapilanSetir.classList.add("silinen-setir");
+  }
+
   fetch(API_URL + '/' + hedefId, {
     method: 'DELETE',
   })
   .then(response => response.json())
   .then(data => {
-    alert("Item deleted: ID #" + hedefId);
-    if (id && id.value.trim() === String(hedefId)) {
-      formuTemizle();
-    }
-    melumatlariGetir();
+    setTimeout(() => {
+      alert("Item deleted: ID #" + hedefId);
+      if (id && id.value.trim() === String(hedefId)) {
+        formuTemizle();
+      }
+      melumatlariGetir();
+    }, 450);
   })
   .catch(err => {
+    if (tapilanSetir) {
+      tapilanSetir.classList.remove("silinen-setir");
+    }
     alert("Error: " + err);
   });
 }
